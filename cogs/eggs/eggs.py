@@ -2,9 +2,11 @@ from cogs.core import core
 from discord.ext import commands
 import discord, random, asyncio, requests
 import os
-html = os.environ["html"]
-html1 = os.environ["html1"]
-html2 = os.environ["html2"]
+from dotenv import load_dotenv
+load_dotenv()
+html = os.getenv("html")
+html1 = os.getenv("html1")
+html2 = os.getenv("html2")
 
 class eggs(core):
   
@@ -36,7 +38,7 @@ class eggs(core):
     if "小卯" in message.content:
       role = guild.get_role(866696175117402122)
       await message.author.add_roles(role)
-      await message.author.send(embed=discord.Embed(title="恭喜你找到`彩蛋#4`：叫我嗎awa", color=random.randint(0, 0xffffff)))
+      await message.author.send(embed=discord.Embed(title="恭喜你找到`彩蛋#4`：早安哪awa", color=random.randint(0, 0xffffff)))
       
     
 

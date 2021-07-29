@@ -8,9 +8,11 @@ from progressbar import *
 import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 import numpy as np
-html = os.environ["html"]
-html1 = os.environ["html1"]
-html2 = os.environ["html2"]
+from dotenv import load_dotenv
+load_dotenv()
+html = os.getenv("html")
+html1 = os.getenv("html1")
+html2 = os.getenv("html2")
 
 async def get_data(user_id: int):
 	response = requests.get(f"https://osu.ppy.sh/users/{user_id}")

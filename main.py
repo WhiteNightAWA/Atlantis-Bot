@@ -1,17 +1,15 @@
 import asyncio
 import os
 import discord
-from replit_keep_alive import keep_alive
-
 from discord.ext import commands
 from discord_slash import SlashCommand
-from dotenv import load_dotenv
 from discord.ext.commands import errors
 
-client = commands.Bot(command_prefix="~", activity=discord.Game(name="木貓"), description="由某白夜和綠鷹精心為木貓打造的機器人~")
+client = commands.Bot(command_prefix="~", activity=discord.Game(name="木貓"), description="由某白夜和綠鷹精心為木貓打造的機器人~awa")
 slash = SlashCommand(client, sync_commands=True, sync_on_cog_reload=True)
-load_dotenv()
 
+from dotenv import load_dotenv
+load_dotenv()
 
 @client.command(name="reload")
 async def reload(ctx):
@@ -20,7 +18,7 @@ async def reload(ctx):
 		if not file.endswith(".py"):
 			for fileName in os.listdir(f"./cogs/{file}"):
 				if fileName.endswith(".py"):
-					if fileName not in ["bgt.py", "delete.py", "leaderboard.py", "update.py"]:
+					if fileName not in ["osu.py"]:
 						try:
 							client.unload_extension(f"cogs.{file}.{fileName[:-3]}")
 						except:
@@ -35,5 +33,4 @@ for file in os.listdir("./cogs"):
 				client.load_extension(f"cogs.{file}.{fileName[:-3]}")
 
 if __name__ == "__main__":
-	keep_alive()
 	client.run(os.getenv("token"))

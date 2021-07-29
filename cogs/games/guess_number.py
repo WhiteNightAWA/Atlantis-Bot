@@ -2,9 +2,11 @@ from cogs.core import core
 from discord.ext import commands
 import discord
 import os, requests, random
-html = os.environ["html"]
-html1 = os.environ["html1"]
-html2 = os.environ["html2"]
+from dotenv import load_dotenv
+load_dotenv()
+html = os.getenv("html")
+html1 = os.getenv("html1")
+html2 = os.getenv("html2")
 
 
 class guess_number(core):

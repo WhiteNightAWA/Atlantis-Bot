@@ -5,9 +5,11 @@ import discord, requests, os, random, youtube_dl, datetime, asyncio
 from discord.errors import *
 from discord.ext.commands.errors import *
 import os
-html = os.environ["html"]
-html1 = os.environ["html1"]
-html2 = os.environ["html2"]
+from dotenv import load_dotenv
+load_dotenv()
+html = os.getenv("html")
+html1 = os.getenv("html1")
+html2 = os.getenv("html2")
 
 
 class channel(core):

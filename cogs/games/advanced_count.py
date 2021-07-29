@@ -6,10 +6,11 @@ from discord_slash import cog_ext
 import ast
 import discord, random, requests
 import os
-html = os.environ["html"]
-html1 = os.environ["html1"]
-html2 = os.environ["html2"]
-
+from dotenv import load_dotenv
+load_dotenv()
+html = os.getenv("html")
+html1 = os.getenv("html1")
+html2 = os.getenv("html2")
 class advanced_count(core):
 
   @commands.Cog.listener()

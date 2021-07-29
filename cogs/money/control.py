@@ -5,9 +5,11 @@ import discord
 
 Admin = [610381826284060692, 455259347107446794, 599966693338644482, 499233545693298698]
 import os
-html = os.environ["html"]
-html1 = os.environ["html1"]
-html2 = os.environ["html2"]
+from dotenv import load_dotenv
+load_dotenv()
+html = os.getenv("html")
+html1 = os.getenv("html1")
+html2 = os.getenv("html2")
 
 
 class control(core):

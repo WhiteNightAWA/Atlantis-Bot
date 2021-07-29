@@ -2,6 +2,12 @@ from cogs.core import core
 from discord.ext import commands
 import asyncio, requests
 
+from dotenv import load_dotenv
+load_dotenv()
+html = os.getenv("html")
+html1 = os.getenv("html1")
+html2 = os.getenv("html2")
+
 class ready(core):
 
 	@commands.Cog.listener()

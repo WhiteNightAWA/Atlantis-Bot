@@ -9,9 +9,11 @@ Admin = [455259347107446794, 721171337879748609, 610381826284060692, 49923354569
          328835900761047043, 560740155347042324, 609412150611673088, 652698396791930914, 587604693136572426,
          599966693338644482]
 import os
-html = os.environ["html"]
-html1 = os.environ["html1"]
-html2 = os.environ["html2"]
+from dotenv import load_dotenv
+load_dotenv()
+html = os.getenv("html")
+html1 = os.getenv("html1")
+html2 = os.getenv("html2")
 
 
 class point(core):

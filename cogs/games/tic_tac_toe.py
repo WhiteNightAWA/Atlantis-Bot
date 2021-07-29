@@ -130,6 +130,7 @@ class tic_tac_toe(core):
 								data["tic_tac_toe"][str(payload.message_id)]["cb"][y][x] = user_num
 							x += 1
 						y += 1
+					data["tic_tac_toe"][str(payload.message_id)]["can_do"].remove(str(payload.emoji))
 					cb = data["tic_tac_toe"][str(payload.message_id)]["cb"]
 					can_do = data["tic_tac_toe"][str(payload.message_id)]["can_do"]
 					winer = await check_winer(cb, can_do)
@@ -141,7 +142,6 @@ class tic_tac_toe(core):
 						else:
 							next = await self.client.get_guild(payload.guild_id).fetch_member(int(player[0]))
 						data["tic_tac_toe"][str(payload.message_id)]["round"] = next.id
-						data["tic_tac_toe"][str(payload.message_id)]["can_do"].remove(str(payload.emoji))
 						await msg.edit(embed=discord.Embed(title=f"`{next}`的回合", color=random.randint(0, 0xffffff), description=f"P1 (:x:): <@!{player[0]}>\nP2 (:o:): <@!{player[1]}>").add_field(name="棋盤", value=await get_text(cb,1)))
 						requests.put(html1, params={"id": html2}, json=data)
 					elif winer == "draw":

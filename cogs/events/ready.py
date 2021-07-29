@@ -1,6 +1,6 @@
 from cogs.core import core
 from discord.ext import commands
-import asyncio, requests
+import asyncio, requests, os
 
 from dotenv import load_dotenv
 load_dotenv()

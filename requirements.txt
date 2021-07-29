@@ -8,3 +8,4 @@ progressbar
 bs4
 requests
 datetime
+matplotlib

@@ -6,3 +6,4 @@ PyNaCl
 ffmpeg
 progressbar
 bs4
+requests

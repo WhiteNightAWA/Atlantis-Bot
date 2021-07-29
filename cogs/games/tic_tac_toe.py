@@ -86,12 +86,12 @@ class tic_tac_toe(core):
 				if str(payload.emoji) == "✅":
 					await msg.edit(content="", embed=discord.Embed(title="遊戲即將開始", color=discord.Colour.green()))
 					cb = [[0,0,0],[0,0,0],[0,0,0]]
+					data = requests.get(html).json()
 					data["tic_tac_toe"][str(msg.id)] = {"player": {str(ctx.author.id): 1,str(p2.id): 2}, "round": ctx.author.id, "cb": cb, "can_do":["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]}
-					requests.put(html1, params={"id": html2}, json=data)
 					for emoji in ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]:
 						await msg.add_reaction(emoji)
 					await msg.edit(embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff), description=f"P1 (:x:): <@!{ctx.author.id}>\nP2 (:o:): <@!{p2.id}>").add_field(name="棋盤", value=await get_text(cb)))
-					data = requests.get(html).json()
+					requests.put(html1, params={"id": html2}, json=data)
 				elif str(payload.emoji) == "❌":
 					await msg.edit(content="", embed=discord.Embed(title=f"`{p2}`拒絕了你的邀請", color=discord.Colour.red()))
 			except asyncio.TimeoutError:

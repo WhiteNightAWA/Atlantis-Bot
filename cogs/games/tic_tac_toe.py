@@ -32,11 +32,11 @@ async def get_text(list_str):
             else:
                 if count < 3:
                     if item == 0:
-                        msg = msg + f"{to_emoji(num)}\n--- + --- + ---\n"
+                        msg = msg + f"{to_emoji(num)}\n----+----+----\n"
                     elif item == 1:
-                        msg = msg + ":x:\n--- + --- + ---\n"
+                        msg = msg + ":x:\n----+----+----\n"
                     elif item == 2:
-                        msg = msg + ":o:\n--- + --- + ---\n"
+                        msg = msg + ":o:\n----+----+----\n"
                 else:
                     if item == 0:
                         msg = msg + f"{to_emoji(num)}"
@@ -139,6 +139,8 @@ class tic_tac_toe(core):
 					else:
 						data["tic_tac_toe"]["points"][str(payload.member.id)] = 1
 					requests.put(html1, params={"id": html2}, json=data)
+			else:
+				await msg.remove_reaction(str(payload.emoji), payload.member)
 
 
 def setup(client):

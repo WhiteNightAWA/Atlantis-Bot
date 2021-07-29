@@ -105,8 +105,10 @@ class tic_tac_toe(core):
 	@commands.command()
 	async def start_tic(self, ctx, p2:discord.Member):
 		await ctx.message.delete()
-		if p2.id == 841678712767512597:
-			pass
+		if p2.bot:
+			await ctx.send(embed=discord.Embed(title=f"暫時並未支持與機器人對戰:MuMao_1:", color=discord.Colour.red()))
+		elif p2.id == ctx.id:
+			await ctx.send(embed=discord.Embed(title=f"你不能與自己對戰awa...", color=discord.Colour.red()))
 		else:
 			msg = await ctx.send(content=f"<@!{p2.id}>",embed=discord.Embed(title=f"`{ctx.author}`邀請你玩井字棋", color=random.randint(0, 0xffffff)))
 			await msg.add_reaction("✅")

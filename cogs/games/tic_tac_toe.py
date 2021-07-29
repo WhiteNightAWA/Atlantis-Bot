@@ -113,11 +113,11 @@ class tic_tac_toe(core):
 				winer = await check_winer(cb)
 				if winer == "no":
 					await msg.remove_reaction(str(payload.emoji), payload.member)
-					await msg.remove_reaction(str(payload.emoji), await self.client.get_guild(payload.guild_id).frtch_member(841678712767512597))
+					await msg.remove_reaction(str(payload.emoji), await self.client.get_guild(payload.guild_id).fetch_member(841678712767512597))
 					if str(player[0]) == str(payload.member.id):
-						next = await self.client.get_guild(payload.guild_id).frtch_member(int(player[1]))
+						next = await self.client.get_guild(payload.guild_id).fetch_member(int(player[1]))
 					else:
-						next = await self.client.get_guild(payload.guild_id).frtch_member(int(player[0]))
+						next = await self.client.get_guild(payload.guild_id).fetch_member(int(player[0]))
 					data["tic_tac_toe"][str(payload.message_id)]["round"] = next.id
 					data["tic_tac_toe"][str(payload.message_id)]["can_do"].remove(str(payload.emoji))
 					await msg.edit(embed=discord.Embed(title=f"`{next}`的回合", color=random.randint(0, 0xffffff), description=f"P1 (:x:): <@!{player[0]}>\nP2 (:o:): <@!{player[1]}>").add_field(name="棋盤", value=await get_text(cb)))

@@ -1,2 +1,8 @@
 discord.py
 python-dotenv
+discord-py-slash-command
+youtube-dl
+PyNaCl
+ffmpeg
+progressbar
+bs4

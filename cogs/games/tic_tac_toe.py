@@ -82,6 +82,27 @@ async def check_winer(line:list, can_do):
 class tic_tac_toe(core):
 
 	@commands.command()
+	async def 查看tic分數(self, ctx):
+		data = requests.get(html).json()
+		id = str(ctx.author.id)
+		if id in data["tic_tac_toe"]["points"]:
+			await ctx.send(f"<@{ctx.author.id}> 的分數為 : `{data['tic_tac_toe']['points'][id]}`")
+		else:
+			await ctx.send(f"<@{ctx.author.id}> 的分數為 : `0`")
+		await ctx.message.delete()
+
+	@commands.command(pass_context=True)
+	async def 查看tic排行榜(self, ctx):
+		data = requests.get(html).json()
+		dictset = sorted(data["tic_tac_toe"]["points"].items(), key = lambda d: d[1], reverse=True)
+		text, count = "", 0
+		for x in dictset:
+			text = text + f"第`{count+1}`名：<@{dictset[count][0]}>  分數：`{dictset[count][1]}`\n"
+			count += 1
+		await ctx.send(embed=discord.Embed(title="**tic_tac_toe**排行榜", description=text, color=random.randint(0, 0xffffff)))
+		await ctx.message.delete()
+
+	@commands.command()
 	async def start_tic(self, ctx, p2:discord.Member):
 		await ctx.message.delete()
 		if p2.id == 841678712767512597:

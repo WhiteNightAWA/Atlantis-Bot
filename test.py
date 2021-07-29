@@ -1,23 +1,42 @@
-x,y = 0,0
-
 cb = [[1,0,0],[0,0,0],[0,0,0]]
 
-def check_winer(line:list):
-    winer = "no"
-    for x in line:
-        if x[0] == x[1] == x[2]:
-            if x[0] != 0:
-                winer = x[0]
-    for x in range(3):
-        if line[0][x] == line[1][x] == line[2][x]:
-            if line[x][0] != 0:
-                winer = line[x][0]
-    if line[0][0] == line[1][1] == line[2][2]:
-        if line[0][0] != 0:
-            winer = line[0][0]
-    if line[0][2] == line[1][1] == line[2][0]:
-        if line[0][2] != 0:
-            winer = line[0][0]
-    return winer
+def to_emoji(num):
+    count = 1
+    for x in ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]:
+        if count == num:
+            return x
+        count += 1
 
-print(check_winer(cb))
+def get_text(list_str):
+    msg, count, num = "", 1, 1
+    for row in list_str:
+        c = 1
+        for item in row:
+            if c < 3:
+                if item == 0:
+                    msg = msg + f"{to_emoji(num)} | "
+                elif item == 1:
+                    msg = msg + ":x: | "
+                elif item == 2:
+                    msg = msg + ":o: | "
+            else:
+                if count < 3:
+                    if item == 0:
+                        msg = msg + f"{to_emoji(num)}\n--- + --- + ---\n"
+                    elif item == 1:
+                        msg = msg + ":x:\n--- + --- + ---\n"
+                    elif item == 2:
+                        msg = msg + ":o:\n--- + --- + ---\n"
+                else:
+                    if item == 0:
+                        msg = msg + f"{to_emoji(num)}"
+                    elif item == 1:
+                        msg = msg + ":x:"
+                    elif item == 2:
+                        msg = msg + ":o:"
+            c += 1
+            num += 1
+        count += 1
+    return msg
+
+print(get_text(cb))

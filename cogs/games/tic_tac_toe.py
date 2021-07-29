@@ -42,7 +42,7 @@ async def get_text(list_str):
 	return msg
 
 async def check_winer(line:list):
-    winer = None
+    winer = "no"
     for x in line:
         if x[0] == x[1] == x[2]:
             if x[0] != 0:
@@ -109,7 +109,7 @@ class tic_tac_toe(core):
 					y += 1
 				cb = data["tic_tac_toe"][str(payload.message_id)]["cb"]
 				winer = await check_winer(cb)
-				if winer == None:
+				if winer == "no":
 					await msg.remove_reaction(str(payload.emoji), payload.member)
 					await msg.remove_reaction(str(payload.emoji), await self.client.get_guild(payload.guild_id).frtch_member(841678712767512597))
 					if str(player[0]) == str(payload.member.id):

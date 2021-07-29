@@ -92,9 +92,11 @@ class tic_tac_toe(core):
 	async def on_raw_reaction_add(self, payload):
 		data = requests.get(html).json()
 		msg = await self.client.get_channel(payload.channel_id).fetch_message(payload.message_id)
-		player = data["tic_tac_toe"][str(payload.message_id)]["player"]
 		if str(payload.message_id) in data["tic_tac_toe"]:
 			if payload.member.id == data["tic_tac_toe"][str(payload.message_id)]["round"] and str(payload.emoji) in data["tic_tac_toe"][str(payload.message_id)]["can_do"]:
+				player = []
+				for p in data["tic_tac_toe"][str(payload.message_id)]["player"]:
+					player.append(p)
 				user = data["tic_tac_toe"][str(payload.message_id)]["round"]
 				user_num = data["tic_tac_toe"][str(payload.message_id)]["player"][str(user)]
 				x,y = 0,0

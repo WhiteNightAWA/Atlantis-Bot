@@ -41,7 +41,7 @@ async def get_text(list_str):
 		count += 1
 	return msg
 
-def check_winer(line:list):
+async def check_winer(line:list):
     winer = "no"
     for x in line:
         if x[0] == x[1] == x[2]:

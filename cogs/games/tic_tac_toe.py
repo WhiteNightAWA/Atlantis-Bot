@@ -1,3 +1,4 @@
+from discord import member
 from discord_slash.utils.manage_components import create_button, create_actionrow, ComponentContext, wait_for_component
 from discord_slash.model import ButtonStyle
 from cogs.core import core
@@ -40,6 +41,21 @@ async def get_text(list_str):
 		count += 1
 	return msg
 
+async def check_winer(line:list):
+    winer = None
+    for x in line:
+        if x[0] == x[1] == x[2]:
+            if x[0] != 0:
+                winer = x[0]
+    for x in range(3):
+        if line[x][0] == line[x][0] == line[x][0]:
+            if line[x][0] != 0:
+                winer = line[x][0]
+    if line[0][0] == line[1][1] == line[2][2] and line[0][0] != 0:
+        winer = line[0][0]
+    elif line[0][2] == line[1][1] == line[2][0] and line[0][0] != 0:
+        winer = line[0][0]
+    return winer
 
 class tic_tac_toe(core):
 
@@ -61,7 +77,7 @@ class tic_tac_toe(core):
 					await msg.edit(content="", embed=discord.Embed(title="遊戲即將開始", color=discord.Colour.green()))
 					cb = [[0,0,0],[0,0,0],[0,0,0]]
 					data = requests.get(html).json()
-					data["tic_tac_toe"][str(msg.id)] = {"player": {"p1": ctx.author.id, "p2": p2.id}, "cb": cb}
+					data["tic_tac_toe"][str(msg.id)] = {"player": {str(ctx.author.id): 1,str(p2.id): 2}, "round": ctx.author.id, "cb": cb, "can_do":["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]}
 					requests.put(html1, params={"id": html2}, json=data)
 					for emoji in ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]:
 						await msg.add_reaction(emoji)
@@ -71,6 +87,46 @@ class tic_tac_toe(core):
 			except asyncio.TimeoutError:
 				await msg.clear_reactions()
 				await msg.edit(content="", embed=discord.Embed(title="邀請超時", color=discord.Colour.red()))
+
+	@commands.Cog.listener()
+	async def on_raw_reaction_add(self, payload):
+		data = requests.get(html).json()
+		msg = await self.client.get_channel(payload.channel_id).fetch_message(payload.message_id)
+		player = data["tic_tac_toe"][str(payload.message_id)]["player"]
+		if str(payload.message_id) in data["tic_tac_toe"]:
+			if payload.member.id == data["tic_tac_toe"][str(payload.message_id)]["round"] and str(payload.emoji) in data["tic_tac_toe"][str(payload.message_id)]["can_do"]:
+				user = data["tic_tac_toe"][str(payload.message_id)]["round"]
+				user_num = data["tic_tac_toe"][str(payload.message_id)]["player"][str(user)]
+				x,y = 0,0
+				for a in [["1️⃣", "2️⃣", "3️⃣"], ["4️⃣", "5️⃣", "6️⃣"], ["7️⃣", "8️⃣", "9️⃣"]]:
+					x = 0
+					for b in a:
+						if str(payload.emoji) == b:
+							data["tic_tac_toe"][str(payload.message_id)]["cb"][y][x] = user_num
+						x += 1
+					y += 1
+				cb = data["tic_tac_toe"][str(payload.message_id)]["cb"]
+				winer = await check_winer(cb)
+				if winer == None:
+					await msg.remove_reaction(str(payload.emoji), payload.member)
+					await msg.remove_reaction(str(payload.emoji), await self.client.get_guild(payload.guild_id).frtch_member(841678712767512597))
+					if str(player[0]) == str(payload.member.id):
+						next = await self.client.get_guild(payload.guild_id).frtch_member(int(player[1]))
+					else:
+						next = await self.client.get_guild(payload.guild_id).frtch_member(int(player[0]))
+					data["tic_tac_toe"][str(payload.message_id)]["round"] = next.id
+					data["tic_tac_toe"][str(payload.message_id)]["can_do"].remove(str(payload.emoji))
+					await msg.edit(embed=discord.Embed(title=f"`{next}`的回合", color=random.randint(0, 0xffffff), description=f"P1 (:x:): <@!{player[0]}>\nP2 (:o:): <@!{player[1]}>").add_field(name="棋盤", value=await get_text(cb)))
+					requests.put(html1, params={"id": html2}, json=data)
+				else:
+					await msg.edit(embed=discord.Embed(title=f"遊戲結束：`{payload.member}`勝利！", color=random.randint(0, 0xffffff), description=f"P1 (:x:): <@!{player[0]}>\nP2 (:o:): <@!{player[1]}>").add_field(name="棋盤", value=await get_text(cb)))
+					await msg.clear_reactions()
+					data["tic_tac_toe"].pop(str(payload.message_id), None)
+					if str(payload.member.id) in data["tic_tac_toe"]["points"]:
+						data["tic_tac_toe"]["points"][str(payload.member.id)] += 1
+					else:
+						data["tic_tac_toe"]["points"][str(payload.member.id)] = 1
+					requests.put(html1, params={"id": html2}, json=data)
 
 
 def setup(client):

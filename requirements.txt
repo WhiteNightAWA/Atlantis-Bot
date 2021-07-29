@@ -7,3 +7,5 @@ ffmpeg
 progressbar
 bs4
 requests
+datetime
+os

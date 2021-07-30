@@ -192,6 +192,7 @@ class tic_tac_toe(core):
 				else:
 					await msg.remove_reaction(str(payload.emoji), payload.member)
 		else:
+			pass
 			
 
 

@@ -107,6 +107,14 @@ class tic_tac_toe(core):
 		await ctx.message.delete()
 		if p2.bot:
 			await ctx.send(embed=discord.Embed(title=f"暫時並未支持與機器人對戰ಠ︵ಠ", color=discord.Colour.red()))
+			'''await msg.edit(content="", embed=discord.Embed(title="遊戲即將開始", color=discord.Colour.green()))
+			cb = [[0,0,0],[0,0,0],[0,0,0]]
+			data = requests.get(html).json()
+			data["tic_tac_toe"][str(msg.id)] = {"player": {str(ctx.author.id): 1,str(p2.id): 2}, "round": ctx.author.id, "cb": cb, "can_do":["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]}
+			for emoji in ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]:
+				await msg.add_reaction(emoji)
+			await msg.edit(embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff), description=f"P1 (:x:): <@!{ctx.author.id}>\nP2 (:o:): <@!{p2.id}>").add_field(name="棋盤", value=await get_text(cb,1)))
+			requests.put(html1, params={"id": html2}, json=data)'''
 		elif p2.id == ctx.author.id:
 			await ctx.send(embed=discord.Embed(title=f"你不能與自己對戰awa...", color=discord.Colour.red()))
 		else:
@@ -183,6 +191,8 @@ class tic_tac_toe(core):
 						requests.put(html1, params={"id": html2}, json=data)
 				else:
 					await msg.remove_reaction(str(payload.emoji), payload.member)
+		else:
+			
 
 
 def setup(client):

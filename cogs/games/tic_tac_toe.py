@@ -300,6 +300,7 @@ class tic_tac_toe(core):
 						await msg.clear_reactions()
 						data["tic_tac_toe"].pop(str(payload.message_id), None)
 						requests.put(html1, params={"id": html2}, json=data)
+						return
 					else:
 						await msg.edit(embed=discord.Embed(title=f"遊戲結束：`{payload.member}`勝利！", color=random.randint(0, 0xffffff), description=f"P1 (:x:): <@!{player[0]}>\nP2 (:o:): <@!{player[1]}>").add_field(name="棋盤", value=await get_text(cb,2)))
 						await msg.clear_reactions()
@@ -309,6 +310,7 @@ class tic_tac_toe(core):
 						else:
 							data["tic_tac_toe"]["points"][str(payload.member.id)] = 1
 						requests.put(html1, params={"id": html2}, json=data)
+						return
 					if str(841678712767512597) in data["tic_tac_toe"][str(payload.message_id)]["player"]:
 						cb, c_num = await bot(cb)
 						data["tic_tac_toe"][str(payload.message_id)]["cb"] = cb

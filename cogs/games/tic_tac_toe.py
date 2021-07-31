@@ -86,85 +86,109 @@ async def bot(cb):
 			if y[0]==2 and y[1]==2 and y[2]==0:
 				cb[count][2] = 2
 				c_num = (count+1)*3
+				return cb, c_num
 			elif y[0]==0 and y[1]==2 and y[2]==2:
 				cb[count][0] = 2
 				c_num = count*3+1
+				return cb, c_num
 			elif y[0]==2 and y[1]==0 and y[2]==2:
 				cb[count][1] = 2
 				c_num = (count+1)*2
+				return cb, c_num
 			count += 1
 	if cb == old_cb:
 		for x in range(3):
 			if cb[0][x]==2 and cb[1][x]==2 and cb[2][x]==0:
 				cb[2][x] = 2
 				c_num = x+7
+				return cb, c_num
 			elif cb[0][x]==2 and cb[1][x]==0 and cb[2][x]==2:
 				cb[1][x] = 2
 				c_num = x+4
+				return cb, c_num
 			elif cb[0][x]==0 and cb[1][x]==2 and cb[2][x]==2:
 				cb[0][x] = 2
 				c_num = x+1
+				return cb, c_num
 	if cb == old_cb:
 		if cb[0][0]==0 and cb[1][1]==2 and cb[2][2]==2:
 			cb[0][0] = 2 
 			c_num = 1
+			return cb, c_num
 		if cb[0][0]==2 and cb[1][1]==0 and cb[2][2]==2:
 			cb[1][1] = 2 
 			c_num = 5
+			return cb, c_num
 		if cb[0][0]==2 and cb[1][1]==2 and cb[2][2]==0:
 			cb[2][2] = 2 
 			c_num = 9
+			return cb, c_num
 		if cb[0][2]==0 and cb[1][1]==2 and cb[2][0]==2:
 			cb[0][2] = 2 
 			c_num = 3
+			return cb, c_num
 		if cb[0][2]==2 and cb[1][1]==0 and cb[2][0]==2:
 			cb[1][1] = 2 
 			c_num = 5
+			return cb, c_num
 		if cb[0][2]==2 and cb[1][1]==2 and cb[2][0]==0:
 			cb[2][0] = 2 
 			c_num = 7
+			return cb, c_num
 	if cb == old_cb:
 		for y in cb:
 			if y[0]==1 and y[1]==1 and y[2]==0:
 				cb[count][2] = 2
 				c_num = (count+1)*3
+				return cb, c_num
 			elif y[0]==0 and y[1]==1 and y[2]==1:
 				cb[count][0] = 2
 				c_num = count*3+1
+				return cb, c_num
 			elif y[0]==1 and y[1]==0 and y[2]==1:
 				cb[count][1] = 2
 				c_num = (count+1)*2
+				return cb, c_num
 			count += 1
 	if cb == old_cb:
 		for x in range(3):
 			if cb[0][x]==1 and cb[1][x]==1 and cb[2][x]==0:
 				cb[2][x] = 2
 				c_num = x+7
+				return cb, c_num
 			elif cb[0][x]==1 and cb[1][x]==0 and cb[2][x]==1:
 				cb[1][x] = 2
 				c_num = x+4
+				return cb, c_num
 			elif cb[0][x]==0 and cb[1][x]==1 and cb[2][x]==1:
 				cb[0][x] = 2
 				c_num = x+1
+				return cb, c_num
 	if cb == old_cb:
 		if cb[0][0]==0 and cb[1][1]==1 and cb[2][2]==1:
 			cb[0][0] = 2 
 			c_num = 1
+			return cb, c_num
 		if cb[0][0]==1 and cb[1][1]==0 and cb[2][2]==1:
 			cb[1][1] = 2 
 			c_num = 5
+			return cb, c_num
 		if cb[0][0]==1 and cb[1][1]==1 and cb[2][2]==0:
 			cb[2][2] = 2 
 			c_num = 9
+			return cb, c_num
 		if cb[0][2]==0 and cb[1][1]==1 and cb[2][0]==1:
 			cb[0][2] = 2 
 			c_num = 3
+			return cb, c_num
 		if cb[0][2]==1 and cb[1][1]==0 and cb[2][0]==1:
 			cb[1][1] = 2 
 			c_num = 5
+			return cb, c_num
 		if cb[0][2]==1 and cb[1][1]==1 and cb[2][0]==0:
 			cb[2][0] = 2 
 			c_num = 7
+			return cb, c_num
 	if cb == old_cb:
 		x,y = 0,0
 		while cb == old_cb:

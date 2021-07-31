@@ -172,6 +172,7 @@ async def bot(cb):
 			if cb[x][y] == 0:
 				cb[x][y] = 2
 				c_num = (x*3)+y+1
+				return cb, c_num
 	return cb, c_num
 
 class tic_tac_toe(core):

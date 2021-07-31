@@ -38,7 +38,7 @@ class eggs(core):
     if "小卯" in message.content:
       role = guild.get_role(866696175117402122)
       await message.author.add_roles(role)
-      await message.author.send(embed=discord.Embed(title="恭喜你找到`彩蛋#4`：早安哪awa", color=random.randint(0, 0xffffff)))
+      await message.author.send(embed=discord.Embed(title="恭喜你找到`彩蛋#4`：有人提到我嗎awa", color=random.randint(0, 0xffffff)))
       
     
 

@@ -136,6 +136,7 @@ async def bot(cb):
 			c_num = 7
 			return cb, c_num
 	if cb == old_cb:
+		count = 0
 		for y in cb:
 			if y[0]==1 and y[1]==1 and y[2]==0:
 				cb[count][2] = 2

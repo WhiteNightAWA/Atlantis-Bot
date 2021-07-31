@@ -288,7 +288,7 @@ class tic_tac_toe(core):
 							data["tic_tac_toe"]["points"][str(payload.member.id)] = 1
 						requests.put(html1, params={"id": html2}, json=data)
 					if str(841678712767512597) in data["tic_tac_toe"][str(payload.message_id)]["player"]:
-						cb = c_num = await bot(cb)
+						cb, c_num = await bot(cb)
 						data["tic_tac_toe"][str(payload.message_id)]["cb"] = cb
 						data["tic_tac_toe"][str(payload.message_id)]["can_do"].remove(str(to_emoji(c_num)))
 						cb = data["tic_tac_toe"][str(payload.message_id)]["cb"]

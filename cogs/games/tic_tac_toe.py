@@ -166,16 +166,12 @@ async def bot(cb):
 			cb[2][0] = 2 
 			c_num = 7
 	if cb == old_cb:
-		ex,x,y = [[1,2,3],[4,5,6],[7,8,9]],0,0
-		for awa in ex:
-			y = 0
-			for owo in awa:
-				if cb[x][y] == 0:
-					cb[x][y] = 2
-					c_num = owo
-					return cb, c_num
-				y += 1
-			x += 1
+		x,y = 0,0
+		while cb == old_cb:
+			x, y = random.randint(0,2),random.randint(0,2)
+			if cb[x][y] == 0:
+				cb[x][y] = 2
+				c_num = (x*3)+y+1
 	return cb, c_num
 
 class tic_tac_toe(core):
@@ -202,7 +198,7 @@ class tic_tac_toe(core):
 		await ctx.message.delete()
 
 	@commands.command()
-	async def start_tic(self, ctx, p2:discord.Member):
+	async def tic(self, ctx, p2:discord.Member):
 		await ctx.message.delete()
 		if p2.bot:
 			msg = await ctx.send(content="", embed=discord.Embed(title="遊戲即將開始", color=discord.Colour.green()))
@@ -296,7 +292,7 @@ class tic_tac_toe(core):
 						winer = await check_winer(cb, can_do)
 						if winer == "no":
 							await msg.remove_reaction(str(to_emoji(c_num)), await self.client.get_guild(payload.guild_id).fetch_member(841678712767512597))
-							next = await self.client.get_guild(payload.guild_id).fetch_member(int(player[1]))
+							next = await self.client.get_guild(payload.guild_id).fetch_member(int(player[0]))
 							data["tic_tac_toe"][str(payload.message_id)]["round"] = next.id
 							await msg.edit(embed=discord.Embed(title=f"`{next}`的回合", color=random.randint(0, 0xffffff), description=f"P1 (:x:): <@!{player[0]}>\nP2 (:o:): <@!{player[1]}>").add_field(name="棋盤", value=await get_text(cb,1)))
 							requests.put(html1, params={"id": html2}, json=data)

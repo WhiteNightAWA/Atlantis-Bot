@@ -79,6 +79,127 @@ async def check_winer(line:list, can_do):
 			winer = "draw"
 	return winer
 
+async def bot(cb):
+	count, old_cb = 0, cb
+	if cb == old_cb:
+		for y in cb:
+			if y[0]==2 and y[1]==2 and y[2]==0:
+				cb[count][2] = 2
+				c_num = (count+1)*3
+				return cb, c_num
+			elif y[0]==0 and y[1]==2 and y[2]==2:
+				cb[count][0] = 2
+				c_num = count*3+1
+				return cb, c_num
+			elif y[0]==2 and y[1]==0 and y[2]==2:
+				cb[count][1] = 2
+				c_num = (count+1)*2
+				return cb, c_num
+			count += 1
+	if cb == old_cb:
+		for x in range(3):
+			if cb[0][x]==2 and cb[1][x]==2 and cb[2][x]==0:
+				cb[2][x] = 2
+				c_num = x+7
+				return cb, c_num
+			elif cb[0][x]==2 and cb[1][x]==0 and cb[2][x]==2:
+				cb[1][x] = 2
+				c_num = x+4
+				return cb, c_num
+			elif cb[0][x]==0 and cb[1][x]==2 and cb[2][x]==2:
+				cb[0][x] = 2
+				c_num = x+1
+				return cb, c_num
+	if cb == old_cb:
+		if cb[0][0]==0 and cb[1][1]==2 and cb[2][2]==2:
+			cb[0][0] = 2 
+			c_num = 1
+			return cb, c_num
+		if cb[0][0]==2 and cb[1][1]==0 and cb[2][2]==2:
+			cb[1][1] = 2 
+			c_num = 5
+			return cb, c_num
+		if cb[0][0]==2 and cb[1][1]==2 and cb[2][2]==0:
+			cb[2][2] = 2 
+			c_num = 9
+			return cb, c_num
+		if cb[0][2]==0 and cb[1][1]==2 and cb[2][0]==2:
+			cb[0][2] = 2 
+			c_num = 3
+			return cb, c_num
+		if cb[0][2]==2 and cb[1][1]==0 and cb[2][0]==2:
+			cb[1][1] = 2 
+			c_num = 5
+			return cb, c_num
+		if cb[0][2]==2 and cb[1][1]==2 and cb[2][0]==0:
+			cb[2][0] = 2 
+			c_num = 7
+			return cb, c_num
+	if cb == old_cb:
+		count = 0
+		for y in cb:
+			if y[0]==1 and y[1]==1 and y[2]==0:
+				cb[count][2] = 2
+				c_num = (count+1)*3
+				return cb, c_num
+			elif y[0]==0 and y[1]==1 and y[2]==1:
+				cb[count][0] = 2
+				c_num = count*3+1
+				return cb, c_num
+			elif y[0]==1 and y[1]==0 and y[2]==1:
+				cb[count][1] = 2
+				c_num = (count+1)*2
+				return cb, c_num
+			count += 1
+	if cb == old_cb:
+		for x in range(3):
+			if cb[0][x]==1 and cb[1][x]==1 and cb[2][x]==0:
+				cb[2][x] = 2
+				c_num = x+7
+				return cb, c_num
+			elif cb[0][x]==1 and cb[1][x]==0 and cb[2][x]==1:
+				cb[1][x] = 2
+				c_num = x+4
+				return cb, c_num
+			elif cb[0][x]==0 and cb[1][x]==1 and cb[2][x]==1:
+				cb[0][x] = 2
+				c_num = x+1
+				return cb, c_num
+	if cb == old_cb:
+		if cb[0][0]==0 and cb[1][1]==1 and cb[2][2]==1:
+			cb[0][0] = 2 
+			c_num = 1
+			return cb, c_num
+		if cb[0][0]==1 and cb[1][1]==0 and cb[2][2]==1:
+			cb[1][1] = 2 
+			c_num = 5
+			return cb, c_num
+		if cb[0][0]==1 and cb[1][1]==1 and cb[2][2]==0:
+			cb[2][2] = 2 
+			c_num = 9
+			return cb, c_num
+		if cb[0][2]==0 and cb[1][1]==1 and cb[2][0]==1:
+			cb[0][2] = 2 
+			c_num = 3
+			return cb, c_num
+		if cb[0][2]==1 and cb[1][1]==0 and cb[2][0]==1:
+			cb[1][1] = 2 
+			c_num = 5
+			return cb, c_num
+		if cb[0][2]==1 and cb[1][1]==1 and cb[2][0]==0:
+			cb[2][0] = 2 
+			c_num = 7
+			return cb, c_num
+	if cb == old_cb:
+		x,y = 0,0
+		while cb == old_cb:
+			x, y = random.randint(0,2),random.randint(0,2)
+			if cb[x][y] == 0:
+				cb[x][y] = 2
+				c_num = (x*3)+y+1
+				return cb, c_num
+	return cb, c_num
+
 class tic_tac_toe(core):
 
 	@commands.command()
@@ -103,10 +224,17 @@ class tic_tac_toe(core):
 		await ctx.message.delete()
 
 	@commands.command()
-	async def start_tic(self, ctx, p2:discord.Member):
+	async def tic(self, ctx, p2:discord.Member):
 		await ctx.message.delete()
 		if p2.bot:
-			await ctx.send(embed=discord.Embed(title=f"暫時並未支持與機器人對戰ಠ︵ಠ", color=discord.Colour.red()))
+			msg = await ctx.send(content="", embed=discord.Embed(title="遊戲即將開始", color=discord.Colour.green()))
+			cb = [[0,0,0],[0,0,0],[0,0,0]]
+			data = requests.get(html).json()
+			data["tic_tac_toe"][str(msg.id)] = {"player": {str(ctx.author.id): 1,str(p2.id): 2}, "round": ctx.author.id, "cb": cb, "can_do":["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]}
+			for emoji in ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]:
+				await msg.add_reaction(emoji)
+			await msg.edit(embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff), description=f"P1 (:x:): <@!{ctx.author.id}>\nP2 (:o:): <@!{p2.id}>").add_field(name="棋盤", value=await get_text(cb,1)))
+			requests.put(html1, params={"id": html2}, json=data)
 		elif p2.id == ctx.author.id:
 			await ctx.send(embed=discord.Embed(title=f"你不能與自己對戰awa...", color=discord.Colour.red()))
 		else:
@@ -172,6 +300,7 @@ class tic_tac_toe(core):
 						await msg.clear_reactions()
 						data["tic_tac_toe"].pop(str(payload.message_id), None)
 						requests.put(html1, params={"id": html2}, json=data)
+						return
 					else:
 						await msg.edit(embed=discord.Embed(title=f"遊戲結束：`{payload.member}`勝利！", color=random.randint(0, 0xffffff), description=f"P1 (:x:): <@!{player[0]}>\nP2 (:o:): <@!{player[1]}>").add_field(name="棋盤", value=await get_text(cb,2)))
 						await msg.clear_reactions()
@@ -181,8 +310,35 @@ class tic_tac_toe(core):
 						else:
 							data["tic_tac_toe"]["points"][str(payload.member.id)] = 1
 						requests.put(html1, params={"id": html2}, json=data)
+						return
+					if str(841678712767512597) in data["tic_tac_toe"][str(payload.message_id)]["player"]:
+						cb, c_num = await bot(cb)
+						data["tic_tac_toe"][str(payload.message_id)]["cb"] = cb
+						data["tic_tac_toe"][str(payload.message_id)]["can_do"].remove(str(to_emoji(c_num)))
+						cb = data["tic_tac_toe"][str(payload.message_id)]["cb"]
+						can_do = data["tic_tac_toe"][str(payload.message_id)]["can_do"]
+						winer = await check_winer(cb, can_do)
+						if winer == "no":
+							await msg.remove_reaction(str(to_emoji(c_num)), await self.client.get_guild(payload.guild_id).fetch_member(841678712767512597))
+							next = await self.client.get_guild(payload.guild_id).fetch_member(int(player[0]))
+							data["tic_tac_toe"][str(payload.message_id)]["round"] = next.id
+							await msg.edit(embed=discord.Embed(title=f"`{next}`的回合", color=random.randint(0, 0xffffff), description=f"P1 (:x:): <@!{player[0]}>\nP2 (:o:): <@!{player[1]}>").add_field(name="棋盤", value=await get_text(cb,1)))
+							requests.put(html1, params={"id": html2}, json=data)
+						elif winer == "draw":
+							await msg.edit(embed=discord.Embed(title=f"遊戲結束：平局！", color=random.randint(0, 0xffffff), description=f"P1 (:x:): <@!{player[0]}>\nP2 (:o:): <@!{player[1]}>").add_field(name="棋盤", value=await get_text(cb,2)))
+							await msg.clear_reactions()
+							data["tic_tac_toe"].pop(str(payload.message_id), None)
+							requests.put(html1, params={"id": html2}, json=data)
+						else:
+							await msg.edit(embed=discord.Embed(title=f"遊戲結束：`小卯`勝利！", color=random.randint(0, 0xffffff), description=f"P1 (:x:): <@!{player[0]}>\nP2 (:o:): <@!{player[1]}>").add_field(name="棋盤", value=await get_text(cb,2)))
+							await msg.clear_reactions()
+							data["tic_tac_toe"].pop(str(payload.message_id), None)
+							requests.put(html1, params={"id": html2}, json=data)
 				else:
 					await msg.remove_reaction(str(payload.emoji), payload.member)
+		else:
+			pass
+			
 
 
 def setup(client):

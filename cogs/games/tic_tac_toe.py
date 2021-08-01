@@ -66,8 +66,8 @@ async def check_winer(line:list, can_do):
 				winer = x[0]
 	for x in range(3):
 		if line[0][x] == line[1][x] == line[2][x]:
-			if line[0][x] != 0:
-				winer = line[0][x]
+			if line[x][0] != 0:
+				winer = line[x][0]
 	if line[0][0] == line[1][1] == line[2][2]:
 		if line[0][0] != 0:
 			winer = line[0][0]

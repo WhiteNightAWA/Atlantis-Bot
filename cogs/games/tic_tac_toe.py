@@ -68,7 +68,6 @@ async def check_winer(line:list, can_do):
 		if line[0][x] == line[1][x] == line[2][x]:
 			if line[x][0] != 0:
 				winer = line[x][0]'''
-	await ctx.send(embed=discord.Embed(title=f"測試", color=discord.Colour.red()))
 	for x in range(3):
 		if line[0][x] == line[1][x] == line[2][x]:
 			if line[0][x] != 0:
@@ -213,6 +212,7 @@ class tic_tac_toe(core):
 
 	@commands.command()
 	async def 查看tic分數(self, ctx):
+		await ctx.send(embed=discord.Embed(title=f"測試", color=discord.Colour.red()))
 		data = requests.get(html).json()
 		id = str(ctx.author.id)
 		if id in data["tic_tac_toe"]["points"]:

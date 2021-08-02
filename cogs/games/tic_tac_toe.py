@@ -68,6 +68,7 @@ async def check_winer(line:list, can_do):
 		if line[0][x] == line[1][x] == line[2][x]:
 			if line[x][0] != 0:
 				winer = line[x][0]'''
+	await ctx.send(embed=discord.Embed(title=f"測試", color=discord.Colour.red()))
 	for x in range(3):
 		if line[0][x] == line[1][x] == line[2][x]:
 			if line[0][x] != 0:

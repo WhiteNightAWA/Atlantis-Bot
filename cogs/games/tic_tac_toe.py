@@ -212,7 +212,6 @@ class tic_tac_toe(core):
 
 	@commands.command()
 	async def 查看tic分數(self, ctx):
-		await ctx.send(embed=discord.Embed(title=f"測試", color=discord.Colour.red()))
 		data = requests.get(html).json()
 		id = str(ctx.author.id)
 		if id in data["tic_tac_toe"]["points"]:

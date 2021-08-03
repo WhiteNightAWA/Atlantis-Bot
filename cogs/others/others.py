@@ -22,6 +22,10 @@ async def get_data(user_id: int):
 
 class others(core):
 
+	@commands.Cog.listener()
+	async def on_raw_reaction_add(self, payload):
+		print(payload.emoji.url)
+
 	@commands.command()
 	async def here2(self, ctx):
 		member = await ctx.guild.fetch_member(455259347107446794)

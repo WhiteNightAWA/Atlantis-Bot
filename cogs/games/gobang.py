@@ -82,7 +82,7 @@ class gobang(core):
             pass
         else:
             msg = await ctx.send(content=f"<@!{p2.id}>",
-                                 embed=discord.Embed(title=f"`{ctx.author}`邀請你玩井字棋", color=random.randint(0, 0xffffff)))
+                                 embed=discord.Embed(title=f"`{ctx.author}`邀請你玩五子棋", color=random.randint(0, 0xffffff)))
             await msg.add_reaction("✅")
             await msg.add_reaction("❌")
             try:
@@ -111,6 +111,7 @@ class gobang(core):
                                                              "M", "N", "O"] and m.author.id == now:
                                 try:
                                     if int(m.content[1:]) in range(1, 16):
+
                                         return True
                                 except ValueError:
                                     pass
@@ -119,19 +120,26 @@ class gobang(core):
                         inp = await self.client.wait_for("message", check=check)
                         y = int(inp.content[1:]) - 1
                         x = int(ord(str(inp.content[0].upper())) - 65)
-                        await inp.delete()
-                        if now == ctx.author.id:
-                            cb[y][x] = 1
-                            await msg.edit(
-                                embed=discord.Embed(title=f"`{p2}`的回合", color=random.randint(0, 0xffffff),
-                                                    description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
-                            now = p2.id
+                        if cb[y][x] == 0:
+                            await inp.delete()
+                            if now == ctx.author.id:
+                                cb[y][x] = 1
+                                await msg.edit(
+                                    embed=discord.Embed(title=f"`{p2}`的回合", color=random.randint(0, 0xffffff),
+                                                        description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
+                                now = p2.id
+                            else:
+                                cb[y][x] = 2
+                                await msg.edit(
+                                    embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff),
+                                                        description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
+                                now = ctx.author.id
                         else:
-                            cb[y][x] = 2
-                            await msg.edit(
-                                embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff),
-                                                    description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
-                            now = ctx.author.id
+                            if cb[y][x] == 1:
+                                w = "X"
+                            else:
+                                w = "O"
+                            await inp.reply(embed=discord.Embed(title=f"這個位置已經有棋{w}了", color=discord.Colour.red()))
             except asyncio.TimeoutError:
                 await msg.clear_reactions()
                 await msg.edit(content="", embed=discord.Embed(title="邀請超時", color=discord.Colour.red()))

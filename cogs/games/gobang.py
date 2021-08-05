@@ -153,6 +153,7 @@ class gobang(core):
                                     cb[y][x] = 2
                                     now, next, last = ctx.author.id, ctx.author, p2
                                 winner = await check_winner(cb)
+                                await ctx.send(winner)
                                 if winner in 1:
                                     await msg.edit(
                                         embed=discord.Embed(title=f"`{ctx.author}`勝利", color=random.randint(0, 0xffffff),

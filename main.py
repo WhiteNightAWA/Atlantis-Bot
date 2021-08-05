@@ -5,7 +5,13 @@ from discord.ext import commands
 from discord_slash import SlashCommand
 from discord.ext.commands import errors
 
-client = commands.Bot(command_prefix="~", activity=discord.Game(name="木貓"), description="由某白夜和綠鷹精心為木貓打造的機器人~awa", guild_subscriptions=True)
+intents = discord.Intents.default()
+intents.members = True
+client = commands.Bot(
+	command_prefix="~",
+	activity=discord.Game(name="木貓"),
+	description="由某白夜和綠鷹精心為木貓打造的機器人~awa",
+	intents=intents)
 slash = SlashCommand(client, sync_commands=True, sync_on_cog_reload=True)
 
 from dotenv import load_dotenv

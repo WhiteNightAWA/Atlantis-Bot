@@ -22,9 +22,9 @@ def fill(text_cb, no, y, c, count):
     if y == 0:
         text_cb = text_cb + no
     elif y == 1:
-        text_cb = text_cb + "●"
+        text_cb = text_cb + "X"
     elif y == 2:
-        text_cb = text_cb + "○"
+        text_cb = text_cb + "O"
     if c == 15:
         text_cb = text_cb + "\n"
     else:
@@ -103,7 +103,7 @@ class gobang(core):
                           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
                     await msg.edit(embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff),
-                                                       description=f"P1 (●): <@!{ctx.author.id}>\nP2 (○): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
+                                                       description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
                     winner, now = None, ctx.author.id
                     while winner is None:
                         def check(m):
@@ -123,14 +123,14 @@ class gobang(core):
                         if now == ctx.author.id:
                             cb[y][x] = 1
                             await msg.edit(
-                                embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff),
-                                                    description=f"P1 (●): <@!{ctx.author.id}>\nP2 (○): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
+                                embed=discord.Embed(title=f"`{p2}`的回合", color=random.randint(0, 0xffffff),
+                                                    description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
                             now = p2.id
                         else:
                             cb[y][x] = 2
                             await msg.edit(
-                                embed=discord.Embed(title=f"`{p2}`的回合", color=random.randint(0, 0xffffff),
-                                                    description=f"P1 (●): <@!{ctx.author.id}>\nP2 (○): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
+                                embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff),
+                                                    description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
                             now = ctx.author.id
             except asyncio.TimeoutError:
                 await msg.clear_reactions()

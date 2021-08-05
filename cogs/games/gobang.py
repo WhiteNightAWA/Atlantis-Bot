@@ -160,7 +160,7 @@ class gobang(core):
                                         continue
                                     else:
                                         if winner != "draw":
-                                            w = ctx.author.id
+                                            w = ctx.author
                                 else:
                                     cb[y][x] = 2
                                     winner = await check_winner(cb)

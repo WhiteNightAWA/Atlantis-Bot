@@ -107,7 +107,9 @@ class gobang(core):
     @commands.command()
     async def gobang(self, ctx, p2: discord.Member):
         if p2.bot:
-            pass
+            await ctx.send(embed=discord.Embed(title=f"暫未支持與機器人對戰awa...", color=discord.Colour.red()))
+        elif p2.id == ctx.author.id:
+            await ctx.send(embed=discord.Embed(title=f"你不能與自己對戰awa...", color=discord.Colour.red()))
         else:
             msg = await ctx.send(content=f"<@!{p2.id}>",
                                  embed=discord.Embed(title=f"`{ctx.author}`邀請你玩五子棋", color=random.randint(0, 0xffffff)))
@@ -131,7 +133,7 @@ class gobang(core):
                           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
                     await msg.edit(embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff),
-                                                       description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n建議到： `設定>外觀>聊天字體縮放>15px或以下` 可以獲得更好的棋盤視野\n**棋盤:**\n{await get_text(cb)}").set_footer(text="請不要同時進行兩局遊戲, 若等待對方時間過長, 你可輸入退出退出遊戲(需等待一段時間後對方無回應"))
+                                                       description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n建議到： `設定>外觀>聊天字體縮放>15px或以下` 可以獲得更好的棋盤視野\n**棋盤:**\n{await get_text(cb)}").set_footer(text="請不要同時進行兩局遊戲, 若等待對方時間過長, 你可`輸入`退出退出遊戲(需等待一段時間後對方無回應"))
                     winner, now = None, ctx.author.id
                     while True:
                         def check(m):
@@ -189,7 +191,7 @@ class gobang(core):
                                 elif winner is None:
                                     await msg.edit(
                                         embed=discord.Embed(title=f"`{next}`的回合", color=random.randint(0, 0xffffff),
-                                                            description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n建議到： `設定>外觀>聊天字體縮放>15px或以下` 可以獲得更好的棋盤視野\n**棋盤:**\n{await get_text(cb)}").set_footer(text="請不要同時進行兩局遊戲, 若等待對方時間過長, 你可輸入退出退出遊戲(需等待一段時間後對方無回應"))
+                                                            description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n建議到： `設定>外觀>聊天字體縮放>15px或以下` 可以獲得更好的棋盤視野\n**棋盤:**\n{await get_text(cb)}").set_footer(text="請不要同時進行兩局遊戲, 若等待對方時間過長, 你可輸入`退出`退出遊戲(需等待一段時間後對方無回應"))
                             else:
                                 if cb[y][x] == 1:
                                     w = "X"

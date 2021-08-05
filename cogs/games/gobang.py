@@ -139,7 +139,11 @@ class gobang(core):
                         def check(m):
                             if str(m.content) == "退出" and m.author.id in [ctx.author.id, p2.id]:
                                 return True
-                            if str(m.content[0]).upper() in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+                            try:
+                                sn = str(m.content[0]).upper()
+                            except:
+                                sn = "Z"
+                            if sn in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
                                                              "M", "N", "O"] and m.author.id == now:
                                 try:
                                     if int(m.content[1:]) in range(1, 16):

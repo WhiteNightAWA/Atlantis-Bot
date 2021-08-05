@@ -53,7 +53,7 @@ class guess_number(core):
 						data["guess_number"]["points"][str(message.author.id)] += 1
 					else:
 						data["guess_number"]["points"][str(message.author.id)] = 1
-					data["guess_number"]["number"] = random.randint(0, 100)
+					data["guess_number"]["number"] = random.randint(1, 100)
 					requests.put(html1, params={"id": html2}, json=data)
 				elif int(message.content) > num:
 					await message.reply(embed=discord.Embed(title="數字太大", description=f"數字<`{message.content}`", color=random.randint(0, 0xffffff)))

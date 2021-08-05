@@ -90,7 +90,7 @@ async def check_winner(cb):
                 y] != 0:
                 winner = cb[x][y]
             elif cb[x][y + 4] == cb[x + 1][y + 3] == cb[x + 2][y + 2] == cb[x + 3][y + 1] == cb[x + 4][y] and cb[x][
-                y] != 0:
+                y + 4] != 0:
                 winner = cb[x][y]
     d = None
     for x in cb:

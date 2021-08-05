@@ -31,7 +31,7 @@ def fill(text_cb, no, y, c, count):
     return text_cb
 
 
-def get_text(cb):
+async def get_text(cb):
     count = 1
     text_cb = "```\n  A   B   C   D   E   F   G   H   I   J   K   L   M   N   O\n"
     for x in cb:

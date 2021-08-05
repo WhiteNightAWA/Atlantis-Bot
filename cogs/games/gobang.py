@@ -118,7 +118,8 @@ class gobang(core):
 
                         inp = await self.client.wait_for("message", check=check)
                         y = int(inp.content[1:]) - 1
-                        x = int(ord(str(inp[0].upper())) - 65)
+                        x = int(ord(str(inp.content[0].upper())) - 65)
+                        await msg.delete()
                         if now == ctx.author.id:
                             cb[y][x] = 1
                             await msg.edit(

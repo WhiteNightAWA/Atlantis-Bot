@@ -153,15 +153,26 @@ class gobang(core):
                                     cb[y][x] = 2
                                     now, next, last = ctx.author.id, ctx.author, p2
                                 winner = await check_winner(cb)
-                                if winner in [1, 2]:
+                                if winner in 1:
                                     await msg.edit(
-                                        embed=discord.Embed(title=f"`{last}`勝利", color=random.randint(0, 0xffffff),
+                                        embed=discord.Embed(title=f"`{ctx.author}`勝利", color=random.randint(0, 0xffffff),
                                                             description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
                                     data = requests.get(html).json()
-                                    if str(last.id) in data["gobang"]:
-                                        data["gobang"][str(last.id)] += 1
+                                    if str(ctx.author.id) in data["gobang"]:
+                                        data["gobang"][str(ctx.author.id)] += 1
                                     else:
-                                        data["gobang"][str(last.id)] = 1
+                                        data["gobang"][str(ctx.author.id)] = 1
+                                    requests.put(html1, params={"id": html2}, json=data)
+                                    return
+                                elif winner == 2:
+                                    await msg.edit(
+                                        embed=discord.Embed(title=f"`{p2}`勝利", color=random.randint(0, 0xffffff),
+                                                            description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
+                                    data = requests.get(html).json()
+                                    if str(p2.id) in data["gobang"]:
+                                        data["gobang"][str(p2.id)] += 1
+                                    else:
+                                        data["gobang"][str(p2.id)] = 1
                                     requests.put(html1, params={"id": html2}, json=data)
                                     return
                                 elif winner == "draw":

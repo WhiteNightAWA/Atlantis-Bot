@@ -152,7 +152,6 @@ class gobang(core):
                             x = int(ord(str(inp.content[0].upper())) - 65)
                             if cb[y][x] == 0:
                                 await inp.delete()
-                                await ctx.send(f"{y}{x}")
                                 if now == ctx.author.id:
                                     cb[y][x] = 1
                                     now, next, last = p2.id, p2, ctx.author
@@ -160,7 +159,6 @@ class gobang(core):
                                     cb[y][x] = 2
                                     now, next, last = ctx.author.id, ctx.author, p2
                                 winner = await check_winner(cb)
-                                await ctx.send(winner, cb)
                                 if winner == 1:
                                     await msg.edit(
                                         embed=discord.Embed(title=f"`{ctx.author}`勝利",

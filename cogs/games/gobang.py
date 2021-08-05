@@ -98,8 +98,7 @@ class gobang(core):
                     data["tic_tac_toe"][str(msg.id)] = {"player": {str(ctx.author.id): 1, str(p2.id): 2},
                                                         "round": ctx.author.id, "cb": cb}
                     await msg.edit(embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff),
-                                                       description=f"P1 (:x:): <@!{ctx.author.id}>\nP2 (:o:): <@!{p2.id}>").add_field(
-                        name="棋盤", value=await get_text(cb)))
+                                                       description=f"P1 (:x:): <@!{ctx.author.id}>\nP2 (:o:): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
                     # requests.put(html1, params={"id": html2}, json=data)
             except asyncio.TimeoutError:
                 await msg.clear_reactions()

@@ -1,9 +1,5 @@
 from cogs.core import core
 from discord.ext import commands
-from discord_slash.utils.manage_components import create_button, create_actionrow, ComponentContext, wait_for_component
-from discord_slash.model import ButtonStyle
-from discord_slash import cog_ext
-import ast
 import discord
 import os
 from dotenv import load_dotenv

@@ -149,45 +149,33 @@ class gobang(core):
                             x = int(ord(str(inp.content[0].upper())) - 65)
                             if cb[y][x] == 0:
                                 await inp.delete()
+
                                 if now == ctx.author.id:
                                     cb[y][x] = 1
-                                    winner = await check_winner(cb)
-                                    if winner is None:
-                                        await msg.edit(
-                                            embed=discord.Embed(title=f"`{p2}`的回合", color=random.randint(0, 0xffffff),
-                                                                description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
-                                        now = p2.id
-                                        continue
-                                    else:
-                                        if winner != "draw":
-                                            w = ctx.author
-                                else:
+                                    now, next, last = p2.id, p2, ctx.author
+                                elif now == p2.id:
                                     cb[y][x] = 2
-                                    winner = await check_winner(cb)
-                                    if winner is None:
-                                        await msg.edit(
-                                            embed=discord.Embed(title=f"`{ctx.author}`的回合",
-                                                                color=random.randint(0, 0xffffff),
-                                                                description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
-                                        now = ctx.author.id
-                                        continue
-                                    else:
-                                        if winner != "draw":
-                                            w = p2
-                                if winner != "draw":
+                                    now, next, last = ctx.author.id, ctx.author, p2
+                                winner = await check_winner(cb)
+                                if winner in [1, 2]:
                                     await msg.edit(
-                                        embed=discord.Embed(title=f"`{w}`勝利", color=random.randint(0, 0xffffff),
+                                        embed=discord.Embed(title=f"`{last}`勝利", color=random.randint(0, 0xffffff),
                                                             description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
                                     data = requests.get(html).json()
-                                    if str(w.id) in data["gobang"]:
-                                        data["gobang"][str(w.id)] += 1
+                                    if str(last.id) in data["gobang"]:
+                                        data["gobang"][str(last.id)] += 1
                                     else:
-                                        data["gobang"][str(w.id)] = 1
+                                        data["gobang"][str(last.id)] = 1
                                     requests.put(html1, params={"id": html2}, json=data)
-                                else:
+                                    return
+                                elif winner == "draw":
                                     await msg.edit(embed=discord.Embed(title=f"平局", color=random.randint(0, 0xffffff),
                                                                        description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
-                                break
+                                    return
+                                elif winner is None:
+                                    await msg.edit(
+                                        embed=discord.Embed(title=f"`{next}`的回合", color=random.randint(0, 0xffffff),
+                                                            description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
                             else:
                                 if cb[y][x] == 1:
                                     w = "X"

@@ -122,11 +122,7 @@ class gobang(core):
                 await msg.clear_reactions()
                 if str(payload.emoji) == "✅":
                     await msg.edit(content="", embed=discord.Embed(title="遊戲即將開始", color=discord.Colour.green()))
-                    cb, c = [], []
-                    for _ in range(15):
-                        c.append(0)
-                    for _ in range(15):
-                        cb.append(c)
+                    cb = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
                     await msg.edit(embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff),
                                                        description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
                     winner, now = None, ctx.author.id
@@ -149,16 +145,14 @@ class gobang(core):
                             x = int(ord(str(inp.content[0].upper())) - 65)
                             if cb[y][x] == 0:
                                 await inp.delete()
-                                await ctx.send(cb)
+                                await ctx.send(f"{y}{x}")
                                 if now == ctx.author.id:
                                     cb[y][x] = 1
                                     now, next, last = p2.id, p2, ctx.author
                                 elif now == p2.id:
                                     cb[y][x] = 2
                                     now, next, last = ctx.author.id, ctx.author, p2
-                                await ctx.send(cb)
                                 winner = await check_winner(cb)
-                                await ctx.send(cb)
                                 if winner in [1, 2]:
                                     await msg.edit(
                                         embed=discord.Embed(title=f"`{last}`勝利", color=random.randint(0, 0xffffff),

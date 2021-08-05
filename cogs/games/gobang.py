@@ -131,7 +131,7 @@ class gobang(core):
                           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
                     await msg.edit(embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff),
-                                                       description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
+                                                       description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n建議到： `設定>外觀>聊天字體縮放>15px或以下` 可以獲得更好的棋盤視野\n**棋盤:**\n{await get_text(cb)}").set_footer(text="請不要同時進行兩局遊戲, 若等待對方時間過長, 你可輸入退出退出遊戲(需等待一段時間後對方無回應"))
                     winner, now = None, ctx.author.id
                     while True:
                         def check(m):
@@ -189,7 +189,7 @@ class gobang(core):
                                 elif winner is None:
                                     await msg.edit(
                                         embed=discord.Embed(title=f"`{next}`的回合", color=random.randint(0, 0xffffff),
-                                                            description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
+                                                            description=f"P1 (X): <@!{ctx.author.id}>\nP2 (O): <@!{p2.id}>\n建議到： `設定>外觀>聊天字體縮放>15px或以下` 可以獲得更好的棋盤視野\n**棋盤:**\n{await get_text(cb)}").set_footer(text="請不要同時進行兩局遊戲, 若等待對方時間過長, 你可輸入退出退出遊戲(需等待一段時間後對方無回應"))
                             else:
                                 if cb[y][x] == 1:
                                     w = "X"
@@ -203,15 +203,14 @@ class gobang(core):
                                 others = ctx.author
                             message = await ctx.send(embed=discord.Embed(
                                 title=f"{inp.author}想退出, 如30秒後對方沒有回應, 將會自動退出...",
-                                description=f"<@!{others.id}若不想退出, 輸入`no`>"))
+                                description=f"<@!{others.id}>若不想退出, 輸入`no`"))
 
                             def check2(m):
                                 return m.author.id == others.id and str(m.content).lower() == "no"
 
                             try:
-                                msg = await self.client.wait_for("message", check=check2, timeout=30)
+                                msg2 = await self.client.wait_for("message", check=check2, timeout=30)
                             except asyncio.TimeoutError:
-                                await msg.delete()
                                 await message.delete()
                                 await inp.delete()
                                 await msg.edit(

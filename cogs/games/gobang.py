@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import os
 import random
 import requests
+
 load_dotenv()
 html = os.getenv("html")
 html1 = os.getenv("html1")
@@ -93,13 +94,43 @@ class gobang(core):
                 await msg.clear_reactions()
                 if str(payload.emoji) == "✅":
                     await msg.edit(content="", embed=discord.Embed(title="遊戲即將開始", color=discord.Colour.green()))
-                    cb = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
-                    data = requests.get(html).json()
-                    data["tic_tac_toe"][str(msg.id)] = {"player": {str(ctx.author.id): 1, str(p2.id): 2},
-                                                        "round": ctx.author.id, "cb": cb}
+                    cb = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
                     await msg.edit(embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff),
-                                                       description=f"P1 (:x:): <@!{ctx.author.id}>\nP2 (:o:): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
-                    # requests.put(html1, params={"id": html2}, json=data)
+                                                       description=f"P1 (●): <@!{ctx.author.id}>\nP2 (○): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
+                    winner, now = None, ctx.author.id
+                    while winner is None:
+                        def check(m):
+                            if str(m.content[0]).upper() in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+                                                             "M", "N", "O"] and m.author.id == now:
+                                try:
+                                    if int(m.content[1:]) in range(1, 16):
+                                        return True
+                                except ValueError:
+                                    pass
+                            return False
+
+                        inp = await self.client.wait_for("message", check=check)
+                        y = int(inp.content[1:]) - 1
+                        x = int(ord(str(inp[0].upper())) - 65)
+                        if now == ctx.author.id:
+                            cb[y][x] = 1
+                            await msg.edit(
+                                embed=discord.Embed(title=f"`{ctx.author}`的回合", color=random.randint(0, 0xffffff),
+                                                    description=f"P1 (●): <@!{ctx.author.id}>\nP2 (○): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
+                            now = p2.id
+                        else:
+                            cb[y][x] = 2
+                            await msg.edit(
+                                embed=discord.Embed(title=f"`{p2}`的回合", color=random.randint(0, 0xffffff),
+                                                    description=f"P1 (●): <@!{ctx.author.id}>\nP2 (○): <@!{p2.id}>\n**棋盤:**\n{await get_text(cb)}"))
+                            now = ctx.author.id
             except asyncio.TimeoutError:
                 await msg.clear_reactions()
                 await msg.edit(content="", embed=discord.Embed(title="邀請超時", color=discord.Colour.red()))

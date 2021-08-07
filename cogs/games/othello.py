@@ -172,6 +172,7 @@ class othello(core):
                                 winner = p2
                             await msg.edit(embed=discord.Embed(title=f"`{winner}`勝利", color=random.randint(0, 0xffffff),
                                                                description=f"P1 (:black_circle:): <@!{ctx.author.id}> : `{mark['1']}`\nP2 (:white_circle:): <@!{p2.id}> : `{mark['2']}`\n**棋盤:**\n{await get_text(cb)}"))
+                            return
 
                         if str(inp.content) != "退出":
                             if inp.author.id == ctx.author.id:

@@ -202,6 +202,7 @@ class othello(core):
                                     await msg.edit(
                                         embed=discord.Embed(title=f"`{winner}`勝利", color=random.randint(0, 0xffffff),
                                                             description=f"P1 (:black_circle:): <@!{ctx.author.id}> : `{mark['1']}`\nP2 (:white_circle:): <@!{p2.id}> : `{mark['2']}`\n**棋盤:**\n{await get_text(cb)}"))
+                                    return
                                 mark = getScoreOfBoard(cb)
                                 await msg.edit(
                                     embed=discord.Embed(title=f"`{next_p}`的回合", color=random.randint(0, 0xffffff),
@@ -209,7 +210,7 @@ class othello(core):
                                         text="請不要同時進行兩局遊戲, 若等待對方時間過長, 你可`輸入`退出退出遊戲(需等待一段時間後對方無回應)"))
 
                                 if getValidMoves(cb, next) == []:
-                                    await ctx.send(content=f"<@!{inp.author.id}> 沒有可以出的棋, 直接跳過這一輪!")
+                                    await ctx.send(content=f"<@!{next_p.id}> 沒有可以出的棋, 直接跳過這一輪!")
                                     if inp.author.id == ctx.author.id:
                                         tile = 2
                                         next = 1

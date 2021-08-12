@@ -42,6 +42,7 @@ class book(core):
 		embed.add_field(name="是否村民", value=是否村民, inline=True)
 		msg3 = await channel.send(embed=embed)
 		await msg3.add_reaction("✅")
+		await msg3.add_reaction("❌")
 		await ctx.message.delete()
 		data = requests.get(html).json()
 		data["book"][str(msg3.id)] = ctx.author.id

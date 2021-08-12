@@ -61,7 +61,7 @@ class sign_in(core):
 		await msg.add_reaction("✅")
 		await msg.add_reaction("❌")
 		await ctx.send(
-			embed=discord.Embed(title="✅ 申請成功", description=f"<@{ctx.author.id}>", color=discord.Colour.green()))
+			embed=discord.Embed(title="✅ 申請成功, 請靜待管理員審核", description=f"<@{ctx.author.id}>", color=discord.Colour.green()))
 
 	@commands.Cog.listener()
 	async def on_raw_reaction_add(self, payload):

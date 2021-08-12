@@ -57,13 +57,23 @@ class book(core):
 			member = await guild.fetch_member(data["book"][str(payload.message_id)])
 			channel = guild.get_channel(payload.channel_id)
 			message = await channel.fetch_message(payload.message_id)
-			embed = message.embeds[0].add_field(name="已完成-處理人:", value=f"<@{payload.user_id}>")
-			await message.edit(embed=embed)
-			await member.send(embed=discord.Embed(title="您的貨品已準備好了\n請到小卯捷運麥當勞旁邊取貨\n歡迎下次訂購",
-			description=f"處理人: <@{payload.user_id}>" ,color=discord.Colour.green()))
-			data = requests.get(html).json()
-			data["book"].pop(str(payload.message_id), None)
-			requests.put(html1, params={"id": html2},json=data)
+			if str(payload.emoji) == "✅":
+				embed = message.embeds[0].add_field(name="已完成-處理人:", value=f"<@{payload.user_id}>")
+				await message.edit(embed=embed)
+				await member.send(embed=discord.Embed(title="您的貨品已準備好了\n請到小卯捷運麥當勞旁邊取貨\n歡迎下次訂購",
+				description=f"處理人: <@{payload.user_id}>" ,color=discord.Colour.green()))
+				data = requests.get(html).json()
+				data["book"].pop(str(payload.message_id), None)
+				requests.put(html1, params={"id": html2},json=data)
+			elif str(payload.emoji) == "❌":
+				embed = message.embeds[0].add_field(name="已拒絕-處理人:", value=f"<@{payload.user_id}>")
+				await message.edit(embed=embed)
+				await member.send(embed=discord.Embed(title="你的訂購機器申請已被拒絕",
+													  description=f"處理人: <@{payload.user_id}>",
+													  color=discord.Colour.red()))
+				data = requests.get(html).json()
+				data["book"].pop(str(payload.message_id), None)
+				requests.put(html1, params={"id": html2}, json=data)
 
 def setup(client):
 	client.add_cog(book(client))

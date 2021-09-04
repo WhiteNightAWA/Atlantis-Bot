@@ -1,7 +1,7 @@
 import datetime
-import requests
 
+print(
+    datetime.datetime.utcnow().replace(microsecond=0).timestamp(),
 
-t = datetime.datetime.now().timestamp()
-
-print(t)
+    datetime.datetime.now().replace(microsecond=0).timestamp()
+)

@@ -20,7 +20,7 @@ class Work(core):
         await ctx.message.delete()
         data = requests.get(html).json()
         no = int(max(data["work"])) + 1
-        time_end = datetime.datetime.utcnow().replace(microsecond=0) + datetime.timedelta(days=3)
+        time_end = datetime.datetime.now().replace(microsecond=0) + datetime.timedelta(days=3)
         int_time = round(time_end.timestamp())
         embed = discord.Embed(
             title=f"`{ctx.author.name}`勞工招募:",

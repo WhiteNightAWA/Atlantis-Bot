@@ -89,7 +89,6 @@ class Work(core):
 
             member = self.client.get_user(d["user_id"])
             await member.send(embed=embed)
-            await ctx.message.delete()
             await ctx.send(embed=discord.Embed(title="Done!",
                                                description="請等待回复",
                                                color=discord.Color.red(),

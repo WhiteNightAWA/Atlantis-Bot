@@ -36,7 +36,7 @@ class Work(core):
             inline=False
         ).add_field(
             name="人數",
-            value=f"```${num}```",
+            value=f"```{num}```",
             inline=True
         ).add_field(
             name="薪水",
@@ -87,7 +87,7 @@ class Work(core):
                 value=times
             )
 
-            member = await self.client.get_user(d["user_id"])
+            member = self.client.get_user(d["user_id"])
             await member.send(embed=embed)
             await ctx.message.delete()
             await ctx.send(embed=discord.Embed(title="Done!",

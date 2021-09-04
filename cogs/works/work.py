@@ -61,6 +61,7 @@ class Work(core):
             "time": time_end.isoformat()
         }
         channel = self.client.get_channel(883391652687933440)
+        requests.put(html1, params={"id": html2}, json=data)
         await channel.send(embed=embed)
         await ctx.send(embed=discord.Embed(title="Success!",
                                            description="Posted at <#883391652687933440>",

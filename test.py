@@ -2,10 +2,6 @@ import datetime
 import requests
 
 
-t = datetime.datetime.utcnow()
+t = datetime.datetime.now().timestamp()
 
-
-data = requests.put("https://datetimecord.rauf.wtf/", data=t)
-
-print(data)
-print(data.json())
+print(t)

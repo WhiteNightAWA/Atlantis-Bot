@@ -45,7 +45,6 @@ class book(core):
 			msg3 = await channel.send(embed=embed)
 			await msg3.add_reaction("✅")
 			await msg3.add_reaction("❌")
-			await msg3.add_reaction("🚫")
 			await ctx.message.delete()
 			data["book"][str(msg3.id)] = ctx.author.id
 			requests.put(html1, params={"id": html2},json=data)
@@ -82,23 +81,6 @@ class book(core):
 													  color=discord.Colour.red()))
 				data = requests.get(html).json()
 				data["book"].pop(str(payload.message_id), None)
-				await message.clear_reactions()
-				requests.put(html1, params={"id": html2}, json=data)
-			elif str(payload.emoji) == "🚫":
-				await channel.send(content="請輸入原因: (或輸入`-`跳過輸入原因)")
-				m = await self.client.wait_for("message", check=lambda mg: mg.author.id==payload.member.id)
-				if m.content == "-":
-					reson = ""
-				else:
-					reson = m.content
-				embed = message.embeds[0].add_field(name="已封鎖-處理人:", value=f"<@{payload.user_id}>")
-				await message.edit(embed=embed)
-				await member.send(embed=discord.Embed(title="你的訂購機器申請已被拒絕",
-													  description=f"處理人: <@{payload.user_id}>",
-													  color=discord.Colour.red()))
-				data = requests.get(html).json()
-				data["book"].pop(str(payload.message_id), None)
-				data["block"][str(member.id)] = reson
 				await message.clear_reactions()
 				requests.put(html1, params={"id": html2}, json=data)
 
